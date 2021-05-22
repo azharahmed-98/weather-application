@@ -2,7 +2,11 @@
   <div id="app">
     <main>
       <div class="search-box">
-        <input type="text" class="search-bar" placeholder="Enter your City" />
+        <input type="text" 
+        class="search-bar" 
+        placeholder="Enter your City" 
+        v-model="query"
+        />
       </div>
       <div class="weather-wrap">
         <div class="location-box">
@@ -25,7 +29,7 @@ export default {
   name: 'App',
   data () {
     return{
-      apiKey: '653cb2ac019d0a5e7af7f1bcf283ca4c',
+      apiKey: process.env.local,
       baseUrl: 'http://api.openweathermap.org/data/2.5/',
       query: ',',
       weather: {}
