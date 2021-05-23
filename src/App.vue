@@ -6,6 +6,7 @@
         class="search-bar" 
         placeholder="Enter your City" 
         v-model="query"
+        @keypress="getWeather"
         />
       </div>
       <div class="weather-wrap">
@@ -29,10 +30,16 @@ export default {
   name: 'App',
   data () {
     return{
-      apiKey: process.env.local,
+      apiKey: process.env.API_KEY,
       baseUrl: 'http://api.openweathermap.org/data/2.5/',
       query: ',',
       weather: {}
+    }
+  },
+  methods:{
+    getWeather(){
+      console.log(process.env.API_KEY);
+      console.log("here");
     }
   }
 }
