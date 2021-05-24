@@ -2,11 +2,12 @@
   <div id="app">
     <main>
       <div class="search-box">
-        <input type="text" 
-        class="search-bar" 
-        placeholder="Enter your City" 
-        v-model="query"
-        @keypress="getWeather"
+        <input 
+          type="text" 
+          class="search-bar" 
+          placeholder="Search for the City"
+          v-model="query"
+          @keypress="getWeather"
         />
       </div>
       <div class="weather-wrap">
@@ -30,16 +31,15 @@ export default {
   name: 'App',
   data () {
     return{
-      apiKey: process.env.API_KEY,
+      apiKey: process.env.VUE_APP_API_KEY,
       baseUrl: 'http://api.openweathermap.org/data/2.5/',
-      query: ',',
+      query: '',
       weather: {}
     }
   },
   methods:{
     getWeather(){
-      console.log(process.env.API_KEY);
-      console.log("here");
+
     }
   }
 }
@@ -81,10 +81,12 @@ main{
   
   color: #313131;
   font-size: 20px;
+
   appearance: none;
   border:none;
   outline: none;
   background: none;
+
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 0px 16px 0px 16px;
@@ -123,10 +125,12 @@ main{
   color: #FFF;
   font-size: 102px;
   font-weight: 900;
+
   text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
   background-color:rgba(255, 255, 255, 0.25);
   border-radius: 16px;
   margin: 30px 0px;
+
   box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
 }
 
