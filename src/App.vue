@@ -2,9 +2,9 @@
   <div id="app">
     <main>
       <div class="search-box">
-        <input 
-          type="text" 
-          class="search-bar" 
+        <input
+          type="text"
+          class="search-bar"
           placeholder="Search for the City"
           v-model="query"
           @keypress="getWeather"
@@ -12,8 +12,10 @@
       </div>
       <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
         <div class="location-box">
-          <div class="location">{{ weather.name }}, {{ weather.sys.country }}</div>
-          <div class="date">5 May, 2021</div>
+          <div class="location">
+            {{ weather.name }}, {{ weather.sys.country }}
+          </div>
+          <div class="date">{{ dateBuilder() }}</div>
         </div>
 
         <div class="weather-box">
@@ -26,38 +28,69 @@
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-  data () {
-    return{
+  name: "App",
+  data() {
+    return {
       apiKey: process.env.VUE_APP_API_KEY,
-      baseUrl: 'http://api.openweathermap.org/data/2.5/',
-      query: '',
-      weather: {}
-    }
+      baseUrl: "http://api.openweathermap.org/data/2.5/",
+      query: "",
+      weather: {},
+    };
   },
-  methods:{
-    getWeather(e){
-      if(e.key == "Enter"){
-        fetch(`${this.baseUrl}weather?q=${this.query}&units=metric&APPID=${this.apiKey}`)
-          .then(res =>{
+  methods: {
+    getWeather(e) {
+      if (e.key == "Enter") {
+        fetch(
+          `${this.baseUrl}weather?q=${this.query}&units=metric&APPID=${this.apiKey}`
+        )
+          .then((res) => {
             return res.json();
-          }).then(this.setResults);
+          })
+          .then(this.setResults);
       }
     },
     setResults(results) {
       this.weather = results;
     },
-    dateBuilder () {
-      
-    }
-  }
-}
+    dateBuilder() {
+      let d = new Date();
+      let days = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ];
+      let months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      let day = days[d.getDay()];
+      let date = d.getDate();
+      let month = months[d.getMonth()];
+      let year = d.getFullYear();
+
+      return `${day}, ${date} ${month}, ${year}`;
+    },
+  },
+};
 </script>
 
 <style>
-
 * {
   margin: 0;
   padding: 0;
@@ -65,23 +98,27 @@ export default {
 }
 
 body {
-  font-family: 'montserrat', sans-serif;
+  font-family: "montserrat", sans-serif;
 }
 
 #app {
-  background-image: url('./assets/cold-bg.jpg');
+  background-image: url("./assets/cold-bg.jpg");
   background-size: cover;
   background-position: bottom;
   transition: 0.4s;
 }
 
-main{
+main {
   min-height: 100vh;
   padding: 25px;
 
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25),
+    rgba(0, 0, 0, 0.75)
+  );
 }
-.search-box{
+.search-box {
   width: 100%;
   margin-bottom: 30px;
 }
@@ -89,12 +126,12 @@ main{
   display: block;
   width: 100%;
   padding: 15px;
-  
+
   color: #313131;
   font-size: 20px;
 
   appearance: none;
-  border:none;
+  border: none;
   outline: none;
   background: none;
 
@@ -111,7 +148,7 @@ main{
 }
 
 .location-box .location {
-  color: #FFF;
+  color: #fff;
   font-size: 32px;
   font-weight: 500;
   text-align: center;
@@ -119,7 +156,7 @@ main{
 }
 
 .location-box .date {
-  color: #FFF;
+  color: #fff;
   font-size: 20px;
   font-weight: 300;
   font-style: italic;
@@ -133,12 +170,12 @@ main{
 .weather-box .temp {
   display: inline-block;
   padding: 10px 25px;
-  color: #FFF;
+  color: #fff;
   font-size: 102px;
   font-weight: 900;
 
   text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
-  background-color:rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.25);
   border-radius: 16px;
   margin: 30px 0px;
 
@@ -146,11 +183,10 @@ main{
 }
 
 .weather-box .weather {
-  color: #FFF;
+  color: #fff;
   font-size: 48px;
   font-weight: 700;
   font-style: italic;
   text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
 }
-
 </style>
