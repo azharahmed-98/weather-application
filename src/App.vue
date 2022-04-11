@@ -1,10 +1,5 @@
 <template>
-  <div
-    id="app"
-    :class="
-      typeof weather.main !== 'undefined' && weather.main.temp >= 25 ? 'warm' : ''
-    "
-  >
+  <div id="app" :class="weather.main && weather.main.temp >= 25 ? 'warm' : ''">
     <main>
       <div class="search-box">
         <input
@@ -15,7 +10,7 @@
           @keypress="getWeather"
         />
       </div>
-      <div class="weather-wrap" v-if="typeof weather.main !== 'undefined'">
+      <div class="weather-wrap" v-if="weather.main">
         <div class="location-box">
           <div class="location">
             {{ weather.name }}, {{ weather.sys.country }}
@@ -26,6 +21,13 @@
         <div class="weather-box">
           <div class="temp">{{ Math.round(weather.main.temp) }}°c</div>
           <div class="weather">{{ weather.weather[0].main }}</div>
+        </div>
+      </div>
+      <div class="weather-wrap" v-else-if="Object.keys(weather).length > 0 && !weather.main">
+        <div class="weather-box">
+          <div class="message">
+            {{ weather.message }} Please Enter a valid city
+          </div>
         </div>
       </div>
     </main>
@@ -57,7 +59,6 @@ export default {
     },
     setResults(results) {
       this.weather = results;
-      console.log(this.weather, "Weather");
     },
     dateBuilder() {
       let d = new Date();
@@ -185,6 +186,20 @@ main {
   font-weight: 900;
 
   text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  margin: 30px 0px;
+
+  box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.weather-box .message {
+  display: inline-block;
+  padding: 10px 25px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: 200;
+
   background-color: rgba(255, 255, 255, 0.25);
   border-radius: 16px;
   margin: 30px 0px;
